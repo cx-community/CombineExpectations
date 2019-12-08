@@ -1,5 +1,5 @@
 import XCTest
-import Combine
+import CXShim
 import CombineExpectations
 
 /// Tests for sample code in documentation
@@ -10,7 +10,7 @@ class DocumentationTests: FailureTestCase {
     
     // SUCCESS: no timeout, no error
     func testArrayPublisherCompletesWithSuccess() throws {
-        let publisher = ["foo", "bar", "baz"].publisher
+        let publisher = ["foo", "bar", "baz"].cx.publisher
         let recorder = publisher.record()
         let completion = try wait(for: recorder.completion, timeout: 0.1)
         if case let .failure(error) = completion {
@@ -35,7 +35,7 @@ class DocumentationTests: FailureTestCase {
     
     // SUCCESS: no timeout, no error
     func testArrayPublisherPublishesArrayElements() throws {
-        let publisher = ["foo", "bar", "baz"].publisher
+        let publisher = ["foo", "bar", "baz"].cx.publisher
         let recorder = publisher.record()
         let elements = try wait(for: recorder.elements, timeout: 0.1)
         XCTAssertEqual(elements, ["foo", "bar", "baz"])
@@ -69,7 +69,7 @@ class DocumentationTests: FailureTestCase {
     
     // SUCCESS: no timeout, no error
     func testArrayPublisherFinishesWithoutError() throws {
-        let publisher = ["foo", "bar", "baz"].publisher
+        let publisher = ["foo", "bar", "baz"].cx.publisher
         let recorder = publisher.record()
         try wait(for: recorder.finished, timeout: 0.1)
     }
@@ -121,7 +121,7 @@ class DocumentationTests: FailureTestCase {
     
     // SUCCESS: no timeout, no error
     func testArrayPublisherPublishesLastElementLast() throws {
-        let publisher = ["foo", "bar", "baz"].publisher
+        let publisher = ["foo", "bar", "baz"].cx.publisher
         let recorder = publisher.record()
         if let element = try wait(for: recorder.last, timeout: 0.1) {
             XCTAssertEqual(element, "baz")
@@ -158,7 +158,7 @@ class DocumentationTests: FailureTestCase {
     
     // SUCCESS: no timeout, no error
     func testArrayOfTwoElementsPublishesElementsInOrder() throws {
-        let publisher = ["foo", "bar"].publisher
+        let publisher = ["foo", "bar"].cx.publisher
         let recorder = publisher.record()
         
         var element = try wait(for: recorder.next(), timeout: 0.1)
@@ -240,7 +240,7 @@ class DocumentationTests: FailureTestCase {
     
     // SUCCESS: no timeout, no error
     func testArrayOfThreeElementsPublishesTwoThenOneElement() throws {
-        let publisher = ["foo", "bar", "baz"].publisher
+        let publisher = ["foo", "bar", "baz"].cx.publisher
         let recorder = publisher.record()
         
         var elements = try wait(for: recorder.next(2), timeout: 0.1)
@@ -292,7 +292,7 @@ class DocumentationTests: FailureTestCase {
     
     // SUCCESS: no timeout, no error
     func testArrayOfThreeElementsPublishesTwoFirstElementsWithoutError() throws {
-        let publisher = ["foo", "bar", "baz"].publisher
+        let publisher = ["foo", "bar", "baz"].cx.publisher
         let recorder = publisher.record()
         let elements = try wait(for: recorder.prefix(2), timeout: 0.1)
         XCTAssertEqual(elements, ["foo", "bar"])
@@ -363,7 +363,7 @@ class DocumentationTests: FailureTestCase {
     
     // SUCCESS: no timeout, no error
     func testArrayPublisherRecording() throws {
-        let publisher = ["foo", "bar", "baz"].publisher
+        let publisher = ["foo", "bar", "baz"].cx.publisher
         let recorder = publisher.record()
         let recording = try wait(for: recorder.recording, timeout: 0.1)
         XCTAssertEqual(recording.output, ["foo", "bar", "baz"])

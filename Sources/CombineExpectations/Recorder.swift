@@ -1,4 +1,4 @@
-import Combine
+import CXShim
 import XCTest
 
 /// A Combine subscriber which records all events published by a publisher.

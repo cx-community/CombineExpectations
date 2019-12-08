@@ -1,5 +1,5 @@
 import XCTest
-import Combine
+import CXShim
 import Foundation
 import CombineExpectations
 

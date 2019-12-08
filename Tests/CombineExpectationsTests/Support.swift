@@ -1,4 +1,4 @@
-import Combine
+import CXShim
 
 extension Publisher where Failure == Never {
     /// Returns a publisher which completes with an error.
